@@ -3,6 +3,7 @@ from tkinter import StringVar
 from rotulo import Rotulo
 from caixa_texto import TextView
 
+
 class ListaValida:
     def __init__(self, x, y, width = 210, height = 20, texto = ""):
         self.x = x
