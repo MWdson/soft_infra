@@ -8,14 +8,14 @@ class TextView:
         self.y = y
         self.width = width
         self.height = height
-        self.var = StringVar()
+        self.var_str = StringVar()
         self.titulo = texto
         self.rotulo = None
         self.text = None
 
     def text_view(self):
-        self.text = Entry(textvariable= self.var )
-        self.text.place( x= self.x, y= self.y, width= self.width, height= self.height)
+        self.text = Entry(textvariable= self.var_str)
+        self.text.place(x= self.x, y= self.y, width= self.width, height= self.height)
         self.rotulo = Rotulo(self.x, self.y-20, self.width, self.height, texto=self.titulo)
 
 
