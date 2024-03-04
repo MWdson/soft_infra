@@ -28,3 +28,4 @@ class ListaValida:
         self.quantidade = TextView(x= (self.x+self.width+20),y= self.y, width= 50, texto= "Qntd.")
         self.quantidade.text_view()
 
+
