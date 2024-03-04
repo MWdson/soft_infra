@@ -2,8 +2,9 @@ from janela import Janela
 from caixa_texto import TextView, TextViewDesabilita
 from lista_validacao import ListaValida
 from funcoes import *
-from tkinter import messagebox
-
+from tkinter import messagebox, Button
+from dados import *
+from tabelas import Tabela
 
 def buscando_os(event, id_da_os):
     if verifica_numero(id_da_os):
@@ -16,9 +17,11 @@ def buscando_os(event, id_da_os):
     else:
         return
 
-    assunto.var_str.set(assunto_api(pasta='su_oss_assunto', busca_id=dados['id_assunto'][0])['assunto'][0])
-    data_os.var_str.set(data_pt_br(dados['data_final'][0]))
-    estrutura.var_str.set(fun_estrutura(dados['id_estrutura'][0]))
+    id_requisita.set_dados()
+
+    assunto.set_var(assunto_api(pasta='su_oss_assunto', busca_id=dados['id_assunto'][0])['assunto'][0])
+    data_os.set_var(data_pt_br(dados['data_final'][0]))
+    estrutura.set_var(fun_estrutura(dados['id_estrutura'][0]))
 
 
 def fun_estrutura(id_estrutura):
@@ -35,6 +38,10 @@ def mostra_classe(event, objeto):
     print(type(objeto).__name__)
 
 
+def salvar():
+    tabela_dados.atualiza(dados_caixas.get_dados())
+
+
 # Buscando lista de materiais
 try:
     dados_material = material()
@@ -49,24 +56,33 @@ espacamento_y = 40
 base_x = 40
 base_y = 40
 
+tabela_dados = Tabela(r"tabelas\registro.xlsx")
+
 window = Janela(800, 400)
 window.janela()
 
+dados_caixas = Dados()
+
+btt_salvar = Button(text="SALVAR", command=salvar)
+btt_salvar.place(x=720, y=610, width=80, height=35)
+
+
+
 # ID da requisição
-id_requisita = TextView(base_x, base_y, texto="ID Requisição")
+id_requisita = TextView(base_x, base_y, texto="ID Requisição", dados=dados_caixas)
 id_requisita.text_view()
 id_requisita.text.bind("<Tab>", lambda event: buscando_os(event, str(id_requisita.var_str.get())))
 
 # Data atividade
-data_os = TextViewDesabilita((base_x + id_requisita.width + espacamento_x), base_y, texto="Data")
+data_os = TextViewDesabilita((base_x + id_requisita.width + espacamento_x), base_y, texto="Data", dados= dados_caixas)
 data_os.text_view()
 
 # Estrutura
-estrutura = TextViewDesabilita((data_os.x + data_os.width + espacamento_x), base_y, width=140, texto="Estrutura")
+estrutura = TextViewDesabilita((data_os.x + data_os.width + espacamento_x), base_y, width=140, texto="Estrutura", dados= dados_caixas)
 estrutura.text_view()
 
 # Assunto
-assunto = TextViewDesabilita(base_x, (data_os.y + espacamento_y), 340, texto='Assunto')
+assunto = TextViewDesabilita(base_x, (data_os.y + espacamento_y), width=340, texto='Assunto', dados= dados_caixas)
 assunto.text_view()
 
 lista_de_objetos.extend([id_requisita, data_os, estrutura, assunto])
@@ -77,17 +93,18 @@ for i in range(12):
         material = ListaValida(x=base_x, y=y, texto=f'Material {i + 1}')
         material.lista_produto = lista_material
         material.lista_view()
-        material.quantidade_text()
-        material.lista.bind("<Tab>", lambda event: mostra_classe(event, material))
+        #material.quantidade_text()
+        #material.lista.bind("<Tab>", lambda event: mostra_classe(event, material))
         y += espacamento_y
     else:
         base_x = 420
         material = ListaValida(x=base_x, y=base_y, texto=f'Material {i + 1}')
         material.lista_produto = lista_material
         material.lista_view()
-        material.quantidade_text()
-        material.lista.bind("<Tab>", lambda event: mostra_classe(event, material))
+        #material.quantidade_text()
+        #material.lista.bind("<Tab>", lambda event: mostra_classe(event, material))
         base_y += espacamento_y
     lista_de_objetos.append(material)
+
 
 window.loop()
