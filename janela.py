@@ -1,5 +1,6 @@
 from tkinter import *
 
+
 class Janela:
     def __init__(self, width, height):
         self.width = width

@@ -1,10 +1,11 @@
 from janela import Janela
 from caixa_texto import TextView, TextViewDesabilita
-from lista_validacao import ListaValida
+from lista_validacao import ListaValida, ListaMaterial
 from funcoes import *
 from tkinter import messagebox, Button
 from dados import *
 from tabelas import Tabela
+
 
 def buscando_os(event, id_da_os):
     if verifica_numero(id_da_os):
@@ -33,11 +34,6 @@ def exibir_alerta(title="Alerta", msg="Essa é uma mensagem de alerta"):
     messagebox.showinfo(title=title, message=msg)
 
 
-def mostra_classe(event, objeto):
-    print(objeto.__class__.__name__)
-    print(type(objeto).__name__)
-
-
 def salvar():
     tabela_dados.atualiza(dados_caixas.get_dados())
 
@@ -50,7 +46,6 @@ except True:
     lista_material = []
     print("Erro de requisição, verifique a sua conexão")
 
-lista_de_objetos = []
 espacamento_x = 20
 espacamento_y = 40
 base_x = 40
@@ -63,9 +58,9 @@ window.janela()
 
 dados_caixas = Dados()
 
+# Button teste para salvar daddos
 btt_salvar = Button(text="SALVAR", command=salvar)
 btt_salvar.place(x=720, y=610, width=80, height=35)
-
 
 
 # ID da requisição
@@ -81,30 +76,27 @@ data_os.text_view()
 estrutura = TextViewDesabilita((data_os.x + data_os.width + espacamento_x), base_y, width=140, texto="Estrutura", dados= dados_caixas)
 estrutura.text_view()
 
+# Alterando base Y para a proxima Linha de objetos
+base_y += espacamento_y
+
 # Assunto
-assunto = TextViewDesabilita(base_x, (data_os.y + espacamento_y), width=340, texto='Assunto', dados= dados_caixas)
+assunto = TextViewDesabilita(base_x, base_y, width=340, texto='Assunto', dados= dados_caixas)
 assunto.text_view()
 
-lista_de_objetos.extend([id_requisita, data_os, estrutura, assunto])
-
+base_y = 40
 y = espacamento_y + assunto.y
 for i in range(12):
     if i < 5:
-        material = ListaValida(x=base_x, y=y, texto=f'Material {i + 1}')
+        material = ListaMaterial(x=base_x, y=y, texto=f'Material {i + 1}',dados= dados_caixas)
         material.lista_produto = lista_material
         material.lista_view()
-        #material.quantidade_text()
-        #material.lista.bind("<Tab>", lambda event: mostra_classe(event, material))
         y += espacamento_y
     else:
         base_x = 420
-        material = ListaValida(x=base_x, y=base_y, texto=f'Material {i + 1}')
+        material = ListaMaterial(x=base_x, y=base_y, texto=f'Material {i + 1}',dados= dados_caixas)
         material.lista_produto = lista_material
         material.lista_view()
-        #material.quantidade_text()
-        #material.lista.bind("<Tab>", lambda event: mostra_classe(event, material))
         base_y += espacamento_y
-    lista_de_objetos.append(material)
 
 
 window.loop()

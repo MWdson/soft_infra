@@ -20,11 +20,11 @@ class TextView:
         self.rotulo = Rotulo(self.x, self.y-20, self.width, self.height, texto=self.titulo)
 
     def set_dados(self):
-        self.dados.atualiza(chave= self.titulo, valor= str(self.var_str.get()))
+        self.dados.dados(chave= self.titulo, valor= str(self.var_str.get()))
 
     def set_var(self, valor):
         self.var_str.set(valor)
-        self.dados.atualiza(chave= self.titulo, valor= str(self.var_str.get()))
+        self.dados.dados(chave= self.titulo, valor= str(self.var_str.get()))
 
 
 class TextViewDesabilita(TextView):
