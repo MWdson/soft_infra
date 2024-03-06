@@ -10,8 +10,9 @@ class Janela:
 
     def janela(self):
         self.window = Tk()
-        img_icon = PhotoImage(file=r"imagem\logoas.png")
-        self.window.iconphoto(False, img_icon)
+        self.window.resizable(width=False, height=False)
+        #img_icon = PhotoImage(file=r"logoas.png")
+        #self.window.iconphoto(False, img_icon)
         self.window.geometry(f"{self.width}x{self.height}")
         self.window.title(self.texto)
 

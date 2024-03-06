@@ -1,8 +1,9 @@
 from tkinter import messagebox
+import openpyxl
 import pandas as pd
-import subprocess
 from janela import *
 from caixa_texto import *
+from interface_infra import *
 
 
 def valida():
@@ -10,7 +11,11 @@ def valida():
         localiza = list(verifica['user']).index(user.var_str.get())
         teste = senha.var_str.get() == verifica['senha'][localiza]
         nome = verifica['nome'][localiza] if teste else "Não informado"
-        muda_processo(login, nome) if teste else exibir_alerta('Senha Invalida!', 'Digite a senha correta, para iniciar.')
+        if teste:
+            login.window.destroy()
+            processo_interface(nome)
+        else:
+            exibir_alerta('Senha Invalida!', 'Digite a senha correta, para iniciar.')
 
     else:
         exibir_alerta(msg="Usuario e senha não identificados")
@@ -22,11 +27,6 @@ def exibir_alerta(title='Alerta', msg="Esta é uma mensagem de alerta!"):
 
 def fun_senha():
     senha.text['show'] = "" if (senha.text['show'] == "*") else "*"
-
-
-def muda_processo(janela, usuario=""):
-    subprocess.Popen(['python', 'interface.py', usuario])
-    janela.finaliza()
 
 
 # Importando dados planilha
@@ -58,4 +58,3 @@ btt_login.bind("<Return>", lambda event: valida())
 
 # Loop da janela
 login.loop()
-

@@ -60,7 +60,7 @@ def verifica_numero(numero: str):
         return False
 
 
-def material(pasta="produtos"):
+def fun_material(pasta="produtos"):
     url = 'https://gestao.estrelasinternet.com.br/webservice/v1/{}'.format(pasta)
     headers = {"ixcsoft": "listar", "Authorization": "Basic {}".format(token), "Content-Type": "application/json"}
     payload = json.dumps({

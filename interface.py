@@ -1,8 +1,8 @@
 import sys
+from func import *
 from janela import Janela
 from caixa_texto import TextView, TextViewDesabilita
 from lista_validacao import ListaValida, ListaMaterial
-from funcoes import *
 from tkinter import messagebox, Button
 from dados import *
 from tabelas import Tabela
@@ -41,7 +41,7 @@ def salvar():
 
 # Buscando lista de materiais
 try:
-    dados_material = material()
+    dados_material = fun_material()
     lista_material = sorted(list(dados_material['descricao']))
 except:
     lista_material = []
@@ -59,7 +59,7 @@ base_x = 40
 base_y = 40
 lista_objetos = []
 
-tabela_dados = Tabela(r"tabelas\registro.xlsx")
+tabela_dados = Tabela(r"registro.xlsx")
 
 window = Janela(800, 400)
 window.janela()
