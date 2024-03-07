@@ -59,7 +59,7 @@ base_x = 40
 base_y = 40
 lista_objetos = []
 
-tabela_dados = Tabela(r"registro.xlsx")
+tabela_dados = Tabela("registro.xlsx")
 
 window = Janela(800, 400)
 window.janela()

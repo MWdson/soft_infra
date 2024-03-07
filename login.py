@@ -1,5 +1,5 @@
 from tkinter import messagebox
-import pandas as pd
+from pandas import read_excel
 import subprocess
 from janela import *
 from caixa_texto import *
@@ -30,7 +30,7 @@ def muda_processo(janela, usuario=""):
 
 
 # Importando dados planilha
-verifica = pd.read_excel(r'login.xlsx', sheet_name='Usuarios')
+verifica = read_excel('login.xlsx')
 
 
 # Abrindo Janela
