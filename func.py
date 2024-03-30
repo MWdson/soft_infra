@@ -9,6 +9,11 @@ token = 'MjI2OjdkMzQ0YzZkNzE4MWE3NDdhNzYxNGY0M2NlN2FkMjIyODQ3NmYwM2M2NmYxMDM2OTE
 
 
 def req_os(text_os: str):
+    """
+    Realiza requisição da OS a partir do ID informado
+    :param text_os: ID da OS informado
+    :return: DataFrame com os dados da OS
+    """
     url = 'https://gestao.estrelasinternet.com.br/webservice/v1/su_oss_chamado'
     headers = {"ixcsoft": "listar", "Authorization": "Basic {}".format(token), "Content-Type": "application/json"}
     payload = json.dumps({
@@ -25,18 +30,32 @@ def req_os(text_os: str):
 
 
 def data_pt_br(data_os):
+    """
+    Transforma os dados da data da OS em um formato string no padrão Brasil
+    :param data_os: DATA informada pelo API
+    :return: Retorna valor tipo strind de uma data no formato do Brasil
+    """
     data = datetime.strptime(data_os, "%Y-%m-%d %H:%M:%S")
     data_ptbr = datetime.strftime(data, "%d/%m/%Y %H:%M:%S")
     return data_ptbr
 
 
 def data_agora():
+    """
+    pytz é uma biblioteca que busca o horario de uma localidade informada como string
+    :return: retorna uma data no formato texto
+    """
     zona = pytz.timezone("Brazil/East")
     agora = datetime.now(zona)
-    return datetime.strftime(agora,"%d/%m/%Y %H:%M:%S")
+    return datetime.strftime(agora, "%d/%m/%Y %H:%M:%S")
 
 
 def assunto_api(pasta: str, busca_id: str):
+    """
+    :param pasta: PASTA onde será realizada a busca na API
+    :param busca_id: ID do assunto que será buscado
+    :return: retorna um DataFrame com os dados do assunto
+    """
     url = 'https://gestao.estrelasinternet.com.br/webservice/v1/{}'.format(pasta)
     headers = {"ixcsoft": "listar", "Authorization": "Basic {}".format(token), "Content-Type": "application/json"}
     payload = json.dumps({
@@ -54,6 +73,7 @@ def assunto_api(pasta: str, busca_id: str):
 
 
 def verifica_numero(numero: str):
+    # Valida se o texto passado é numerico ou não, RETORNO BOLEANO
     if numero.isnumeric():
         return True
     else:
@@ -61,6 +81,11 @@ def verifica_numero(numero: str):
 
 
 def fun_material(pasta="produtos"):
+    """
+    Busca lista de materiais cadastrados no IXC
+    :param pasta: PASTA onde será buscado os dados dos materiais
+    :return: DataFrame com os dados dos materiais direcionados a Infraestrutura
+    """
     url = 'https://gestao.estrelasinternet.com.br/webservice/v1/{}'.format(pasta)
     headers = {"ixcsoft": "listar", "Authorization": "Basic {}".format(token), "Content-Type": "application/json"}
     payload = json.dumps({
@@ -78,6 +103,11 @@ def fun_material(pasta="produtos"):
 
 
 def fun_estrutura(id_estrutura="0"):
+    """
+    Busca dados de uma estrutura passada na seleção da OS informada
+    :param id_estrutura: ID especifico da estrutura
+    :return: Retorna nome da estrutura
+    """
     try:
         pasta = "estrutura"
         url = 'https://gestao.estrelasinternet.com.br/webservice/v1/{}'.format(pasta)
