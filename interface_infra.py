@@ -121,3 +121,6 @@ def processo_interface(usuario="Não informado"):
         lista_objetos.append(material)
 
     window.loop()
+
+
+processo_interface()
